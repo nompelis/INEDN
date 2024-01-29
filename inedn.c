@@ -11,7 +11,7 @@
   [3] https://en.wikipedia.org/wiki/ASCII
 
  2023/12/28 IN <nompelis@nobelware.com> - Initial creation
- 2024/01/12 IN <nompelis@nobelware.com> - Last modification
+ 2024/01/28 IN <nompelis@nobelware.com> - Last modification
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,97 +24,6 @@
 
 
 // -------------- helper functions --------------
-//
-// Strings of built-in documentation
-//
-
-const char *inEDN_strings[] = {
- "The word \"null\" by itself",
-   "[ This is it. Nothing else to know... ]",
-
- "The (special) TopLevel type",
-   "[ This is a type that is meant to work as a top-level root node for ]"
-   "[ parsing multiple types that can appear concatanated. ]",
-
- "The Object (a \"set\" of key-value pairs) type",
-   "[ This is a _set_ of key-value pairs. The whole EDN block itself is ]"
-   "[ an \"object\". A \"key-value\" pair is customary of a map construct. ]",
-
- "The String type",
-   "[ This an string object, which is in Unicode format. ]"
-   "[ The characters are contained within \"\" as usual. ]",
-
- "The Array type",
-   "[ This an \"ordered list\" object. ]"
-   "[ The list's items are typically contained within square brackets. ]",
-
- "The Number type",
-   "[ This is a signed number, without distrinction between a real number ]"
-   "[ and an integer, and it may use exponential \"E\" notation. ]",
-
- "The Boolean type",
-   "[ This two-state object must be one of the words \"true\" or \"false\" ]"
-   "[ in all lower case latters (I think). ]",
-
- "The (special) Pair type",
-   "[ This is NOT an official type in EDN, but I am using it such that I ]"
-   "[ can store the key-value pairs of the \"Object\" type. ]",
-
- NULL
-};
-
-
-//
-// Function to print info for the format types
-//
-
-void inEDN_ShowTypeInfo( const char *strings[] )
-{
-   int n;
-   const char *s;
-
-   fprintf( stdout, "=====================================================\n" );
-   n = 0;
-   while( (s = strings[n++]) != NULL ) {
-      if( s[0] == '[' ) {
-         int k=0;
-         const char *s2 = s;
-         char iprint=0;
-         while( s2[k] != '\0' ) {
-            if( s[k] == '[' ) {
-               fprintf( stdout, "  " );
-               iprint = 1;
-               ++k;
-            }
-            if( iprint == 1 ) {
-               fprintf( stdout, "%c", s[k] );
-               ++k;
-            }
-            if( s[k] == ']' ) {
-               fprintf( stdout, "\n" );
-               iprint = 0; 
-               ++k;
-            }
-         }
-      } else {
-         fprintf( stdout, " * %s\n", s );
-      }
-   }
-
-   fprintf( stdout, "=====================================================\n" );
-}
-
-
-void print_type_info( void )
-{
-#ifdef _DEBUG_
-   fprintf( stdout, " [DEBUG]  Short name types \n" );
-   inEDN_ShowTypeInfo( inEDN_Type_strings );
-   fprintf( stdout, " [DEBUG]  Long descriptions of types \n" );
-#endif
-   inEDN_ShowTypeInfo( inEDN_strings );
-}
-
 
 //
 // Function to convert from an ASCII "0xXX" representation to the
